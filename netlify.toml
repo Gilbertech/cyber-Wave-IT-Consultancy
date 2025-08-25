@@ -1,0 +1,12 @@
+[build]
+  command = "next build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Required for Next.js + Netlify Forms
+[[redirects]]
+  from = "/_next/data/:buildId/:path*"
+  to = "/:path*"
+  status = 200
