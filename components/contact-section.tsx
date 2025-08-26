@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -19,15 +18,14 @@ export function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Form will be handled by Netlify automatically due to netlify attribute
-    // Reset form after submission
+    // Form submission handled automatically by Netlify
     setFormData({ name: "", email: "", phone: "", message: "" })
-
-    // Show success message or redirect
     alert("Thank you for your message! We'll get back to you soon.")
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -38,9 +36,12 @@ export function ContactSection() {
     <section id="contact" className="py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-foreground mb-6">Get In Touch</h2>
+          <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl text-foreground mb-6">
+            Get In Touch
+          </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Ready to bring your software ideas to life? Contact me today for a free consultation
+            Ready to bring your software ideas to life? Contact me today for a
+            free consultation
           </p>
         </div>
 
@@ -48,7 +49,9 @@ export function ContactSection() {
           {/* Contact Information */}
           <div className="space-y-8">
             <div>
-              <h3 className="font-heading font-semibold text-2xl text-foreground mb-6">Contact Information</h3>
+              <h3 className="font-heading font-semibold text-2xl text-foreground mb-6">
+                Contact Information
+              </h3>
               <div className="space-y-4">
                 <div className="flex items-start space-x-4">
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -65,7 +68,9 @@ export function ContactSection() {
                     <Phone className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">Phone & WhatsApp</p>
+                    <p className="font-semibold text-foreground">
+                      Phone & WhatsApp
+                    </p>
                     <p className="text-muted-foreground">+254 768 299 985</p>
                   </div>
                 </div>
@@ -75,8 +80,12 @@ export function ContactSection() {
                     <Mail className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">Email Address</p>
-                    <p className="text-muted-foreground">gilbertngaruiya@gmail.com</p>
+                    <p className="font-semibold text-foreground">
+                      Email Address
+                    </p>
+                    <p className="text-muted-foreground">
+                      gilbertngaruiya@gmail.com
+                    </p>
                   </div>
                 </div>
 
@@ -85,15 +94,21 @@ export function ContactSection() {
                     <Clock className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">Availability</p>
-                    <p className="text-muted-foreground">Mon - Fri: 8:00 AM - 8:00 PM</p>
-                    <p className="text-muted-foreground">Weekend: By Appointment</p>
+                    <p className="font-semibold text-foreground">
+                      Availability
+                    </p>
+                    <p className="text-muted-foreground">
+                      Mon - Fri: 8:00 AM - 8:00 PM
+                    </p>
+                    <p className="text-muted-foreground">
+                      Weekend: By Appointment
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Enhanced Map with Thika location */}
+            {/* Map */}
             <div className="bg-muted rounded-lg h-64 flex items-center justify-center relative overflow-hidden">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.089876543!2d37.069!3d-1.033!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f4f1c1c1c1c1c%3A0x1c1c1c1c1c1c1c1c!2sThika%2C%20Kenya!5e0!3m2!1sen!2s!4v1703123456789!5m2!1sen!2s"
@@ -111,7 +126,9 @@ export function ContactSection() {
           {/* Contact Form */}
           <Card className="border-border">
             <CardHeader>
-              <CardTitle className="font-heading font-semibold text-2xl text-foreground">Send me a Message</CardTitle>
+              <CardTitle className="font-heading font-semibold text-2xl text-foreground">
+                Send me a Message
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <form
@@ -122,19 +139,21 @@ export function ContactSection() {
                 data-netlify="true"
                 netlify-honeypot="bot-field"
               >
-                {/* Hidden field for Netlify */}
                 <input type="hidden" name="form-name" value="contact" />
 
-                {/* Honeypot field for spam protection */}
+                {/* Honeypot */}
                 <div style={{ display: "none" }}>
                   <label>
-                    Don't fill this out if you're human: <input name="bot-field" />
+                    Don’t fill this out: <input name="bot-field" />
                   </label>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-foreground mb-2"
+                    >
                       Full Name *
                     </label>
                     <Input
@@ -148,7 +167,10 @@ export function ContactSection() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
+                    <label
+                      htmlFor="phone"
+                      className="block text-sm font-medium text-foreground mb-2"
+                    >
                       Phone Number
                     </label>
                     <Input
@@ -163,7 +185,10 @@ export function ContactSection() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-foreground mb-2"
+                  >
                     Email Address *
                   </label>
                   <Input
@@ -178,7 +203,10 @@ export function ContactSection() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-foreground mb-2"
+                  >
                     Project Details *
                   </label>
                   <Textarea
@@ -192,9 +220,25 @@ export function ContactSection() {
                   />
                 </div>
 
-                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                <Button
+                  type="submit"
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                >
                   Send Message
                 </Button>
+              </form>
+
+              {/* Hidden static form for Netlify detection */}
+              <form
+                name="contact"
+                data-netlify="true"
+                netlify-honeypot="bot-field"
+                hidden
+              >
+                <input type="text" name="name" />
+                <input type="email" name="email" />
+                <input type="tel" name="phone" />
+                <textarea name="message"></textarea>
               </form>
             </CardContent>
           </Card>
