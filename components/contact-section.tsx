@@ -16,11 +16,42 @@ export function ContactSection() {
     message: "",
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Form submission handled automatically by Netlify
-    setFormData({ name: "", email: "", phone: "", message: "" })
-    alert("Thank you for your message! We'll get back to you soon.")
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+
+    try {
+      const formDataToSubmit = new FormData()
+      formDataToSubmit.append('form-name', 'contact')
+      formDataToSubmit.append('name', formData.name)
+      formDataToSubmit.append('email', formData.email)
+      formDataToSubmit.append('phone', formData.phone)
+      formDataToSubmit.append('message', formData.message)
+
+      const response = await fetch('/__forms.html', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(formDataToSubmit as any).toString(),
+      })
+
+      if (response.ok) {
+        setSubmitStatus('success')
+        setFormData({ name: "", email: "", phone: "", message: "" })
+      } else {
+        throw new Error('Network response was not ok')
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (
@@ -131,23 +162,7 @@ export function ContactSection() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <form
-                onSubmit={handleSubmit}
-                className="space-y-6"
-                name="contact"
-                method="POST"
-                data-netlify="true"
-                netlify-honeypot="bot-field"
-              >
-                <input type="hidden" name="form-name" value="contact" />
-
-                {/* Honeypot */}
-                <div style={{ display: "none" }}>
-                  <label>
-                    Don’t fill this out: <input name="bot-field" />
-                  </label>
-                </div>
-
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label
@@ -164,6 +179,7 @@ export function ContactSection() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Your full name"
+                      disabled={isSubmitting}
                     />
                   </div>
                   <div>
@@ -180,6 +196,7 @@ export function ContactSection() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="Your phone number"
+                      disabled={isSubmitting}
                     />
                   </div>
                 </div>
@@ -199,6 +216,7 @@ export function ContactSection() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="your.email@example.com"
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -217,28 +235,33 @@ export function ContactSection() {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Tell me about your project requirements, timeline, and budget..."
+                    disabled={isSubmitting}
                   />
                 </div>
+
+                {submitStatus === 'success' && (
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <p className="text-green-800 font-medium">
+                      Thank you for your message! I'll get back to you soon.
+                    </p>
+                  </div>
+                )}
+
+                {submitStatus === 'error' && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-red-800 font-medium">
+                      There was an error sending your message. Please try again or contact me directly.
+                    </p>
+                  </div>
+                )}
 
                 <Button
                   type="submit"
                   className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                  disabled={isSubmitting}
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </Button>
-              </form>
-
-              {/* Hidden static form for Netlify detection */}
-              <form
-                name="contact"
-                data-netlify="true"
-                netlify-honeypot="bot-field"
-                hidden
-              >
-                <input type="text" name="name" />
-                <input type="email" name="email" />
-                <input type="tel" name="phone" />
-                <textarea name="message"></textarea>
               </form>
             </CardContent>
           </Card>
