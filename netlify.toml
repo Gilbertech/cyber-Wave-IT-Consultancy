@@ -1,10 +1,2 @@
-[build]
-  command = "next build"
-  publish = ".next"
-
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-
-  [plugins.inputs]
-    # Enables compatibility with Next.js + Netlify Forms
-    experimental_forms = true
